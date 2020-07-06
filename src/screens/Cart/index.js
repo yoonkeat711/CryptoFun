@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {View, FlatList, Text, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import storageKey from '../constants/storageKey';
-import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
+import storageKey from '../../constants/storageKey';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
-import store from './../store';
+import store from '../../store';
+import {checkoutCart} from './actions';
+import {displayHistory} from '../History/actions';
 
 const Cell = ({item}) => {
   return (
@@ -36,27 +38,34 @@ const Cell = ({item}) => {
 };
 const Cart = ({...props}) => {
   const [items, setItems] = useState(null);
-  props.cartItems.then(value => setItems(value?.cartItems));
+  props.cartItems.then((value) => setItems(value?.cartItems));
 
   const onPressCheckout = async () => {
     const historyItem = JSON.parse(
       await AsyncStorage.getItem(storageKey.history),
     );
+    console.warn(items);
     if (historyItem) {
-      historyItem.push(items);
+      items.forEach((item) => {
+        historyItem.push(item);
+      });
       await AsyncStorage.setItem(
         storageKey.history,
         JSON.stringify(historyItem),
       );
+      store.dispatch(displayHistory(historyItem));
     } else {
       await AsyncStorage.setItem(storageKey.history, JSON.stringify(items));
+      store.dispatch(displayHistory(items));
     }
     await AsyncStorage.removeItem(storageKey.cart);
+    store.dispatch(checkoutCart());
   };
 
   if (!items) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', backgroundColor: 'white'}}>
+      <View
+        style={{flex: 1, justifyContent: 'center', backgroundColor: 'white'}}>
         <Text style={{textAlign: 'center'}}>{'No items in cart'}</Text>
       </View>
     );
@@ -85,7 +94,7 @@ const Cart = ({...props}) => {
             bottom: 0,
             paddingVertical: 16,
             width: '100%',
-            backgroundColor: 'white'
+            backgroundColor: 'white',
           }}
           onPress={onPressCheckout}>
           <Text style={{textAlign: 'center'}}>{'CHECKOUT'}</Text>
@@ -98,6 +107,5 @@ const Cart = ({...props}) => {
 const mapStateToProps = (state) => ({
   cartItems: state.cartReducers,
 });
-
 
 export default connect(mapStateToProps)(Cart);

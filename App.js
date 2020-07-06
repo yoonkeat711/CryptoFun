@@ -7,13 +7,13 @@
  */
 
 import React from 'react';
-import Search from './src/Search';
+import Search from './src/screens/Search';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
-import Cart from './src/Cart';
-import History from './src/History';
-import Price from './src/Search/Price';
+import Cart from './src/screens/Cart';
+import History from './src/screens/History';
+import Price from './src/screens/Search/Price';
 import {Provider} from 'react-redux';
 import store from './src/store';
 

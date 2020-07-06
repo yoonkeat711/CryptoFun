@@ -5,12 +5,14 @@ import {
   TextInput,
   ActivityIndicator,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import QUERY_DOMAIN from './QUERY_DOMAIN';
 import AsyncStorage from '@react-native-community/async-storage';
-import storageKey from '../constants/storageKey';
-import store from './../store';
+import storageKey from '../../constants/storageKey';
+import store from '../../store';
 import {addCart} from '../Cart/actions';
+import {addHistory} from '../History/actions';
 
 // const Price = ({route, navigation}) => {
 //
@@ -109,8 +111,35 @@ class Price extends Component {
     });
   };
 
+  // valueItem = (() => {
+  //   return {
+  //     ...this.props.route.params?.item,
+  //     totalPrice: this.state.totalPrice.toFixed(2),
+  //     unit: this.state.unit,
+  //   };
+  // })();
+
   onPressCheckout = async () => {
-    // await AsyncStorage.setItem(historyStorageKey, value);
+    const checkoutItem = {
+      ...this.props.route.params?.item,
+      totalPrice: this.state.totalPrice.toFixed(2),
+      unit: this.state.unit,
+    };
+    const historyItem = JSON.parse(
+      await AsyncStorage.getItem(storageKey.history),
+    );
+
+    if (historyItem) {
+      historyItem.push(checkoutItem);
+      await AsyncStorage.setItem(storageKey.history, JSON.stringify(historyItem));
+      store.dispatch(addHistory(historyItem));
+    } else {
+      await AsyncStorage.setItem(storageKey.history, JSON.stringify([checkoutItem]));
+      store.dispatch(addHistory([checkoutItem]));
+    }
+
+    Alert.alert('Checkout', 'Checked out!');
+    this.props.navigation.goBack();
   };
 
   onPressCart = async () => {
@@ -130,12 +159,14 @@ class Price extends Component {
         storageKey.cart,
         JSON.stringify(cartStorageItem),
       );
-      // console.warn(cartStorageItem);
       store.dispatch(addCart(cartStorageItem));
     } else {
       await AsyncStorage.setItem(storageKey.cart, JSON.stringify([cartItem]));
       store.dispatch(addCart([cartItem]));
     }
+
+    Alert.alert('Cart', 'Added to cart!');
+    this.props.navigation.goBack();
   };
 
   render() {
