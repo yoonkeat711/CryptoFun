@@ -5,15 +5,18 @@ import {
   TextInput,
   ActivityIndicator,
   TouchableOpacity,
-  AsyncStorage,
 } from 'react-native';
 import QUERY_DOMAIN from './QUERY_DOMAIN';
+import AsyncStorage from '@react-native-community/async-storage';
+import storageKey from '../constants/storageKey';
+import store from './../store';
+import {addCart} from '../Cart/actions';
 
 // const Price = ({route, navigation}) => {
 //
 //   const [price, setPrice] = useState(0);
 //
-//   React.useEffect = (() => {
+//   React.useEffect(() => {
 //     const PRICE_API =
 //       `${QUERY_DOMAIN}` +
 //       '/simple/price?ids=' +
@@ -69,9 +72,6 @@ class LabelValue extends PureComponent {
   }
 }
 
-const cartStorageKey = '@storage:cart';
-const historyStorageKey = '@storage:history';
-
 class Price extends Component {
   constructor(props) {
     super(props);
@@ -109,8 +109,33 @@ class Price extends Component {
     });
   };
 
-  onPressCheckout = async (value) => {
+  onPressCheckout = async () => {
     // await AsyncStorage.setItem(historyStorageKey, value);
+  };
+
+  onPressCart = async () => {
+    const cartItem = {
+      ...this.props.route.params?.item,
+      totalPrice: this.state.totalPrice.toFixed(2),
+      unit: this.state.unit,
+    };
+
+    const cartStorageItem = JSON.parse(
+      await AsyncStorage.getItem(storageKey.cart),
+    );
+
+    if (cartStorageItem) {
+      cartStorageItem.push(cartItem);
+      await AsyncStorage.setItem(
+        storageKey.cart,
+        JSON.stringify(cartStorageItem),
+      );
+      // console.warn(cartStorageItem);
+      store.dispatch(addCart(cartStorageItem));
+    } else {
+      await AsyncStorage.setItem(storageKey.cart, JSON.stringify([cartItem]));
+      store.dispatch(addCart([cartItem]));
+    }
   };
 
   render() {
@@ -170,10 +195,10 @@ class Price extends Component {
               flex: 1,
               borderTopWidth: 0.5,
             }}>
-            <TouchableOpacity style={{}} onPress={() => this.onPressCheckout()}>
+            <TouchableOpacity onPress={() => this.onPressCheckout()}>
               <Text>{'Checkout'}</Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.onPressCart()}>
               <Text>{'Add to Cart'}</Text>
             </TouchableOpacity>
           </View>

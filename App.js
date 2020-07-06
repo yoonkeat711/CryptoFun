@@ -14,6 +14,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Cart from './src/Cart';
 import History from './src/History';
 import Price from './src/Search/Price';
+import {Provider} from 'react-redux';
+import store from './src/store';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -29,7 +31,7 @@ const SearchStack = () => {
   )
 }
 
-const App = () => {
+const NavigationsContainer = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator>
@@ -38,6 +40,15 @@ const App = () => {
         <Tab.Screen name={'History'} component={History} />
       </Tab.Navigator>
     </NavigationContainer>
+  )
+}
+
+const App = () => {
+  return (
+    <Provider store={store}>
+      <NavigationsContainer />
+    </Provider>
+
   );
 };
 export default App;

@@ -1,7 +1,7 @@
 import React  from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-const CryptoCell = ({symbol, name, index}) => {
+const CryptoCell = React.memo(({symbol, name, index}) => {
   return (
     <View
       style={{
@@ -22,6 +22,6 @@ const CryptoCell = ({symbol, name, index}) => {
       </Text>
     </View>
   );
-};
+});
 
 export default CryptoCell;
