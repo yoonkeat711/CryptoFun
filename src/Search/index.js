@@ -10,6 +10,10 @@ import {
 import CryptoCell from './components/CryptoCell';
 import MockCoinList from './coinlist.json';
 import QUERY_DOMAIN from './QUERY_DOMAIN';
+import store from '../store';
+import {displayCart} from '../Cart/actions';
+import AsyncStorage from '@react-native-community/async-storage';
+import storageKey from '../constants/storageKey';
 
 const COIN_LIST_API = `${QUERY_DOMAIN}` + '/coins/list';
 
@@ -36,8 +40,10 @@ const Search = ({navigation}) => {
     setData(MockCoinList);
   }, []);
 
-  useEffect(() => {
+  useEffect(async() => {
     fetchData();
+    const cartItemStorage = JSON.parse(await AsyncStorage.getItem(storageKey.cart))
+    store.dispatch(displayCart(cartItemStorage))
   }, [fetchData]);
 
   const filteredData = (() => {
