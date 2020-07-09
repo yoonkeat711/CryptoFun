@@ -111,14 +111,6 @@ class Price extends Component {
     });
   };
 
-  // valueItem = (() => {
-  //   return {
-  //     ...this.props.route.params?.item,
-  //     totalPrice: this.state.totalPrice.toFixed(2),
-  //     unit: this.state.unit,
-  //   };
-  // })();
-
   onPressCheckout = async () => {
     const checkoutItem = {
       ...this.props.route.params?.item,
