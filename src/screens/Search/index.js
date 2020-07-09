@@ -42,6 +42,10 @@ const Search = ({navigation}) => {
   }, []);
 
   useEffect(async() => {
+    if (JSON.parse(await AsyncStorage.getItem(storageKey.isPasswordLocked))) {
+      navigation.push('Lock');
+    }
+
     fetchData();
     const cartItemStorage = JSON.parse(await AsyncStorage.getItem(storageKey.cart));
     const historyItemStorage = JSON.parse(await AsyncStorage.getItem(storageKey.history));

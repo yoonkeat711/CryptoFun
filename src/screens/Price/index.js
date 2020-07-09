@@ -7,49 +7,12 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import QUERY_DOMAIN from './QUERY_DOMAIN';
+import QUERY_DOMAIN from '../Search/QUERY_DOMAIN';
 import AsyncStorage from '@react-native-community/async-storage';
 import storageKey from '../../constants/storageKey';
 import store from '../../store';
 import {addCart} from '../Cart/actions';
 import {addHistory} from '../History/actions';
-
-// const Price = ({route, navigation}) => {
-//
-//   const [price, setPrice] = useState(0);
-//
-//   React.useEffect(() => {
-//     const PRICE_API =
-//       `${QUERY_DOMAIN}` +
-//       '/simple/price?ids=' +
-//       `${route.params?.item?.id}` +
-//       '&vs_currencies=myr';
-//   //     // fetch(PRICE_API, {
-//   //     //   method: 'GET',
-//   //     //   headers: {
-//   //     //     Accept: 'application/json',
-//   //     //     'Content-Type': 'application/json',
-//   //     //   },
-//   //     // })
-//   //     //   .then((response) => response.json())
-//   //     //   .then((response) => {
-//   //     //     console.warn(response);
-//   //     //     setPrice(response);
-//   //     //   })
-//   //     //   .catch((err) => {
-//   //     //     console.warn(err);
-//   //     //   });
-//     }, []);
-//
-//   const fetchPrice = React.useCallback(async() => {
-//     const response = await fetch(PRICE_API);
-//
-//   },[]);
-//
-//   return (
-//     <View style={{flex: 1}}>{console.warn(price)}</View>
-//   );
-// };
 
 class LabelValue extends PureComponent {
   constructor(props) {
