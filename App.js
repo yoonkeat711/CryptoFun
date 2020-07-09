@@ -13,7 +13,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import Cart from './src/screens/Cart';
 import History from './src/screens/History';
-import Price from './src/screens/Search/Price';
+import Price from './src/screens/Price';
+import Lock from './src/screens/Lock';
+import Setting from './src/screens/Setting';
 import {Provider} from 'react-redux';
 import store from './src/store';
 
@@ -27,6 +29,9 @@ const SearchStack = () => {
         headerShown: false
       }} />
       <Stack.Screen name={"Price"} component={Price} />
+      <Stack.Screen name={"Lock"} component={Lock} options={{
+        headerShown: false,
+      }}/>
     </Stack.Navigator>
   )
 }
@@ -38,6 +43,7 @@ const NavigationsContainer = () => {
         <Tab.Screen name={'Search'} component={SearchStack} />
         <Tab.Screen name={'Cart'} component={Cart} />
         <Tab.Screen name={'History'} component={History} />
+        <Tab.Screen name={"Setting"} component={Setting} />
       </Tab.Navigator>
     </NavigationContainer>
   )

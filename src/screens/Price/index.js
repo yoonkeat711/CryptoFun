@@ -7,14 +7,14 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import QUERY_DOMAIN from './QUERY_DOMAIN';
+import QUERY_DOMAIN from '../Search/QUERY_DOMAIN';
 import AsyncStorage from '@react-native-community/async-storage';
 import storageKey from '../../constants/storageKey';
 import store from '../../store';
 import {addCart} from '../Cart/actions';
 import {addHistory} from '../History/actions';
 
-// const Price = ({route, navigation}) => {
+// const Index = ({route, navigation}) => {
 //
 //   const [price, setPrice] = useState(0);
 //
@@ -74,7 +74,7 @@ class LabelValue extends PureComponent {
   }
 }
 
-class Price extends Component {
+class Index extends Component {
   constructor(props) {
     super(props);
 
@@ -230,4 +230,4 @@ class Price extends Component {
   }
 }
 
-export default Price;
+export default Index;

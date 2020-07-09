@@ -36,24 +36,33 @@ const History = ({...props}) => {
   const [items, setItems] = useState();
   props.historyItems.then(value => setItems(value?.historyItems));
 
-  return (
-  <View
-    style={{
-      flex: 1,
-      backgroundColor: 'white',
-      justifyContent: 'space-between',
-      flexDirection: 'row',
-      paddingTop: useSafeAreaInsets().top,
-    }}>
-    <FlatList
-      data={items}
-      renderItem={({item}) => {
-        return <Cell item={item} />;
-      }}
-      keyExtractor={(item, index) => index.toString()}
-    />
-  </View>
-);
+  if (!items) {
+    return (
+      <View
+        style={{flex: 1, justifyContent: 'center', backgroundColor: 'white'}}>
+        <Text style={{textAlign: 'center'}}>{'No items in history'}</Text>
+      </View>
+    );
+  } else {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: 'white',
+          justifyContent: 'space-between',
+          flexDirection: 'row',
+          paddingTop: useSafeAreaInsets().top,
+        }}>
+        <FlatList
+          data={items}
+          renderItem={({item}) => {
+            return <Cell item={item} />;
+          }}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </View>
+    );
+  }
 }
 
 const mapStateToProps = (state) => ({
