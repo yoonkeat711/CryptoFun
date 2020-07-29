@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Component, PureComponent} from 'react';
+import React, {Component, PureComponent} from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import storageKey from '../../constants/storageKey';
 import store from '../../store';
 import {addCart} from '../Cart/actions';
 import {addHistory} from '../History/actions';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 class LabelValue extends PureComponent {
   constructor(props) {
@@ -125,13 +126,13 @@ class Price extends Component {
   };
 
   render() {
-    const {id, name, symbol} = this.props.route.params?.item;
+    const {id, name, symbol} = this.props.route.params.item;
 
     if (this.state.isLoading) {
       return <ActivityIndicator style={{flex: 1, alignSelf: 'center'}} />;
     } else
       return (
-        <View style={{backgroundColor: 'white', flex: 1}}>
+        <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
           <LabelValue label={'NAME'} value={name} />
           <LabelValue label={'SYMBOL'} value={symbol.toUpperCase()} />
           <LabelValue label={'CURRENCY'} value={'MYR'} />
@@ -171,13 +172,14 @@ class Price extends Component {
           </View>
           <View
             style={{
-              width: '100%',
               justifyContent: 'space-between',
               flexDirection: 'row',
               paddingHorizontal: 36,
               paddingVertical: 16,
               position: 'absolute',
               bottom: 0,
+              left: 0,
+              right: 0,
               flex: 1,
               borderTopWidth: 0.5,
             }}>
@@ -188,7 +190,7 @@ class Price extends Component {
               <Text>{'Add to Cart'}</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </SafeAreaView>
       );
   }
 }

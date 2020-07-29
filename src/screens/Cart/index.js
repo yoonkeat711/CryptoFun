@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, FlatList, Text, TouchableOpacity} from 'react-native';
+import {View, FlatList, Text, TouchableOpacity, SafeAreaView, De} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import storageKey from '../../constants/storageKey';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -71,13 +71,12 @@ const Cart = ({...props}) => {
     );
   } else {
     return (
-      <View
+      <SafeAreaView
         style={{
           flex: 1,
           backgroundColor: 'white',
           justifyContent: 'space-between',
           flexDirection: 'row',
-          paddingTop: useSafeAreaInsets().top,
         }}>
         <FlatList
           data={items}
@@ -92,14 +91,18 @@ const Cart = ({...props}) => {
             borderColor: 'grey',
             position: 'absolute',
             bottom: 0,
+            left: 0,
+            right: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
             paddingVertical: 16,
-            width: '100%',
+            // width: '100%',
             backgroundColor: 'white',
           }}
           onPress={onPressCheckout}>
           <Text style={{textAlign: 'center'}}>{'CHECKOUT'}</Text>
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     );
   }
 };

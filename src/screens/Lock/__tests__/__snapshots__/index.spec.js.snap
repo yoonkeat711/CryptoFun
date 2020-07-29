@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "white",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "alignSelf": "center",
+        "paddingBottom": 8,
+      }
+    }
+  >
+    Password
+  </Text>
+  <TextInput
+    allowFontScaling={true}
+    onChangeText={[Function]}
+    rejectResponderTermination={true}
+    style={
+      Object {
+        "alignSelf": "center",
+        "borderColor": "grey",
+        "borderWidth": 1,
+        "height": 30,
+        "width": "50%",
+      }
+    }
+    textAlign="center"
+    underlineColorAndroid="transparent"
+    value={null}
+  />
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignSelf": "center",
+        "opacity": 1,
+        "paddingTop": 8,
+        "width": "50%",
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "alignSelf": "center",
+        }
+      }
+    >
+      Enter
+    </Text>
+  </View>
+</View>
+`;

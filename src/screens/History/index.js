@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {FlatList, Text, View} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Cell = ({item}) => {
   return (
@@ -45,13 +45,12 @@ const History = ({...props}) => {
     );
   } else {
     return (
-      <View
+      <SafeAreaView
         style={{
           flex: 1,
           backgroundColor: 'white',
           justifyContent: 'space-between',
           flexDirection: 'row',
-          paddingTop: useSafeAreaInsets().top,
         }}>
         <FlatList
           data={items}
@@ -60,7 +59,7 @@ const History = ({...props}) => {
           }}
           keyExtractor={(item, index) => index.toString()}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 }
