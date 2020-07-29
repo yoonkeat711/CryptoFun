@@ -1,14 +1,12 @@
-import React, {Component, useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   View,
-  Text,
   SafeAreaView,
   FlatList,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
 import CryptoCell from './components/CryptoCell';
-import MockCoinList from './coinlist.json';
 import QUERY_DOMAIN from './QUERY_DOMAIN';
 import store from '../../store';
 import {displayCart} from '../Cart/actions';
@@ -19,29 +17,27 @@ import {displayHistory} from '../History/actions';
 const COIN_LIST_API = `${QUERY_DOMAIN}` + '/coins/list';
 
 const Search = ({navigation}) => {
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState(null);
   const [text, setText] = useState(null);
 
   const fetchData = useCallback(() => {
-    // fetch(COIN_LIST_API, {
-    //   method: 'GET',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((response) => {
-    //     setData(response);
-    //   })
-    //   .catch((err) => {
-    //     console.warn(err);
-    //   });
-    setData(MockCoinList);
+    fetch(COIN_LIST_API, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        setData(response);
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
   }, []);
 
-  useEffect(async() => {
+  useEffect(async () => {
     if (JSON.parse(await AsyncStorage.getItem(storageKey.isPasswordLocked))) {
       navigation.push('Lock');
     }
@@ -52,7 +48,8 @@ const Search = ({navigation}) => {
 
     store.dispatch(displayCart(cartItemStorage));
     store.dispatch(displayHistory(historyItemStorage));
-  }, [fetchData]);
+
+  }, []);
 
   const filteredData = (() => {
     if (!text?.trim().length) {
@@ -68,6 +65,7 @@ const Search = ({navigation}) => {
   })();
 
   const navigateToPrice = (item) => {
+    console.log(item);
     navigation.navigate('Price', {
       item: item,
     });
